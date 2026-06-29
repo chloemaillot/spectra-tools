@@ -34,6 +34,7 @@ description: >
 |---------|---------|-------------|
 | `setup` | Extract DS + build knowledge base | `references/onboarding.md` (STEP 0) |
 | `spec {name}` | Write a component or screen specification | `references/actions/spec.md` |
+| `validate` | Check the active spec against the DS registries | `references/actions/validate.md` |
 | `design` | Generate Figma design from active spec | `references/actions/design.md` |
 | `review` | Validate design against spec, tokens, and visual fidelity | `references/actions/review.md` |
 | `done` | Archive spec and close | `references/actions/done.md` |
@@ -47,7 +48,7 @@ description: >
 ### Component mode
 Design system components (Button, Card, Modal...):
 ```
-spec {component}  →  design  →  review  →  done
+spec {component}  →  validate  →  design  →  review  →  done
 ```
 Spec includes: architecture, props API, variants, tokens, Figma link.
 
@@ -56,8 +57,8 @@ Full interfaces (dashboard, settings, onboarding...):
 ```
 spec {screen}
   → if new DS components identified:
-      spec {component}  →  design {component}  →  done {component}
-  → design {screen}  →  review  →  done
+      spec {component}  →  validate  →  design {component}  →  done {component}
+  → validate  →  design {screen}  →  review  →  done
 ```
 Spec includes: layout, sections, components used, content structure, responsive rules.
 **If the spec identifies UI patterns not covered by existing DS components**, they are flagged as new components. Each new component gets its own spec → design → done cycle before the screen design proceeds.
