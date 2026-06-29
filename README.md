@@ -21,17 +21,36 @@ This workflow forces every visual decision to flow through the registries built 
 ## Workflow
 
 ```
-setup (once)  →  spec {name}  →  design  →  review  →  done
+setup (once)  →  spec {name}  →  validate  →  design  →  review  →  done
 ```
 
 | Command | Purpose |
 |---------|---------|
 | `setup` | Extract your Figma DS into a local knowledge base (components, tokens, text styles, assets) |
 | `spec {name}` | Write a component or screen specification, validated against your DS |
+| `validate` | Check the spec against your DS registries before any design generation happens |
 | `design` | Generate the Figma design from the active spec via MCP |
 | `review` | Validate the generated design against spec, tokens, and visual fidelity |
 | `done` | Archive the spec and close |
 | `drop` | Abandon with preserved learnings |
+
+### About `validate`
+
+The validator is a small Node CLI (`scripts/validate-spec.js`) that:
+
+- Parses your active spec (markdown)
+- Loads the local DS registries (`components.json`, `variables.json`, `text-styles.json`)
+- Reports any unknown token references (e.g. `spacing/extra-large` when only `spacing/lg` exists) as errors
+- Reports any unknown component or text style names as warnings
+- Exits non-zero on errors, so it works in CI too
+
+Run it directly without the skill:
+
+```bash
+npm run validate -- path/to/your/spec.md
+```
+
+Tests live in `tests/`. Run them with `npm test`.
 
 ## Requirements
 

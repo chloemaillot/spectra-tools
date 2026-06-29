@@ -17,5 +17,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Check Node syntax
-        run: node --check scripts/build-registry.js
+      - name: Check syntax of all JS scripts
+        run: |
+          for f in scripts/*.js; do
+            node --check "$f"
+          done
+
+      - name: Run tests
+        run: npm test
