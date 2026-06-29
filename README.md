@@ -2,11 +2,23 @@
 
 A spec-first workflow for designers using **Claude Code** to generate Figma designs from natural language, with strict design system compliance.
 
-> Status: alpha. Public-facing scaffold for the [bridge-ds](https://github.com/noemuch/bridge-ds) framework, adapted to designer-friendly workflows.
+> Status: alpha. This is my designer-friendly adaptation of the [bridge-ds](https://github.com/noemuch/bridge-ds) framework. Bridge-ds does the heavy lifting (Figma generation, MCP transport); this repo adds the workflow layer on top.
 
 ## What this is
 
-A set of **Claude Code skills, slash commands, and action references** that let you go from spec → Figma design without leaving the terminal, while staying 100% DS-compliant (bound variables, real components, no hardcoded values).
+A layer of **Claude Code skills, slash commands, action references, and a spec validator** on top of bridge-ds. It gives designers a spec → validate → design → review → done loop they can run from the terminal, while staying 100% DS-compliant (bound variables, real components, no hardcoded values).
+
+## What's mine vs. what's bridge-ds
+
+Bridge-ds and figma-console-mcp do the actual work of generating designs in Figma. This repo wraps them with:
+
+- A `design-workflow` Claude Code skill (`SKILL.md`) — the prompts that drive the workflow
+- Action references in `references/actions/` — what each command actually does (spec, validate, design, review, done, drop)
+- A spec validator CLI (`scripts/validate-spec.js`) — Node, with tests, catches unknown token/component references before generation
+- Quality gates and Figma API rules used at each step
+- A registry builder (`scripts/build-registry.js`) — parses Figma MCP tool-result files into a `components.json` registry
+
+If you want to know how the actual design generation works, read the bridge-ds repo.
 
 ## Why
 
